@@ -1,6 +1,6 @@
 id: 102
 name: Skull-Extension
-main: org.geyser.extension.102.Skull-Extension
+main: src/main/java/org/geyser/extension/exampleid/Main.java
 api: 2.4.1
 version: 1.0.0
 authors: [SonnenPingu]
