@@ -1,6 +1,6 @@
-id: exampleid
-name: ExampleExtension
-main: org.geyser.extension.exampleid.ExampleExtension
+id: 102
+name: Skull-Extension
+main: org.geyser.extension.102.Skull-Extension
 api: 2.4.1
 version: 1.0.0
-authors: [ExampleAuthor]
+authors: [SonnenPingu]
