@@ -2,9 +2,9 @@ package org.geyser.extension.exampleid;
 
 import org.geysermc.event.subscribe.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
-import org.geysermc.geyser.api.extension.GeyserExtension;
+import org.geysermc.geyser.api.extension.Extension;
 
-public class Main extends GeyserExtension {
+public class Main extends Extension {
 
     @Override
     public void onInitialize() {
