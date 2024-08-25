@@ -1,6 +1,6 @@
 package org.geyser.extension.exampleid;
 
-import org.geysermc.geyser.api.event.Subscribe;
+import org.geysermc.event.subscribe.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent.SkullTextureType;
 
@@ -17,16 +17,24 @@ import java.util.logging.Logger;
 public class Skull {
 
     private static final Logger LOGGER = Logger.getLogger(Skull.class.getName());
-    private static final String DATABASE_URL = "jdbc:sqlite:extensions/skulldb/skulls.db"; // Datenbankpfad als Konstante
+    private static final String DATABASE_URL = "jdbc:sqlite:/home/container/extensions/Skull-Expand/skulls.db"; // Datenbankpfad als Konstante
+
+
+    // Statische Initialisierung, um den SQLite-Treiber zu laden
+    static {
+        try {
+            Class.forName("org.sqlite.JDBC");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Subscribe
     public void onDefineCustomSkulls(GeyserDefineCustomSkullsEvent event) {
         try {
-            // Verbindung zur Datenbank herstellen und Texturen abrufen
             List<String> skinHashes = fetchSkullSkinHashesFromDatabase();
-
-            // Jeden Skin-Hash registrieren
             for (String skinHash : skinHashes) {
+                // Registriere den Skin-Hash für benutzerdefinierte Schädelformen
                 event.register(skinHash, SkullTextureType.SKIN_HASH);
                 LOGGER.info("Registered custom skull skin hash: " + skinHash);
             }
@@ -45,9 +53,13 @@ public class Skull {
 
             while (rs.next()) {
                 String textureUrl = rs.getString("texture_url");
-                // Extrahiere den Teil hinter dem letzten '/'
-                String skinHash = textureUrl.substring(textureUrl.lastIndexOf('/') + 1);
-                skinHashes.add(skinHash);
+                if (textureUrl != null && !textureUrl.isEmpty()) {
+                    // Extrahiere den Hash aus der URL (hinter dem letzten '/')
+                    String skinHash = textureUrl.substring(textureUrl.lastIndexOf('/') + 1);
+                    skinHashes.add(skinHash);
+                } else {
+                    LOGGER.warning("Encountered null or empty texture_url in database.");
+                }
             }
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error fetching skull skin hashes from database:", e);
