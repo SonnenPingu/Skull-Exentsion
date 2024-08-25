@@ -1,76 +1,35 @@
 package org.geyser.extension.exampleid;
 
-import org.geysermc.event.subscribe.Subscribe;
-import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent;
+import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
 import org.geysermc.geyser.api.extension.Extension;
+import org.geysermc.event.subscribe.Subscribe;
 
-import java.nio.file.Path;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.logging.Logger;
 
-public class Main implements Extension {
+public class ExampleExtension implements Extension {
 
-    private Connection connection;
+    private static final Logger LOGGER = Logger.getLogger(ExampleExtension.class.getName());
+    private Skull skullHandler;
 
     @Override
-    public void onPostInitialize(GeyserPostInitializeEvent event) {
-        // Verbindung zur SQLite-Datenbank herstellen
-        connectToDatabase();
-
-        // Event-Handler registrieren
-        getEventManager().register(this);
+    public void onInitialize() {
+        // Initialisiere den Skull-Handler
+        skullHandler = new Skull();
     }
 
     @Subscribe
-    public void onDefineCustomSkulls(GeyserDefineCustomSkullsEvent event) {
-        // Daten aus der Datenbank abrufen und Skulls registrieren
-        Map<String, String> skulls = fetchSkullsFromDatabase();
-        
-        for (Map.Entry<String, String> entry : skulls.entrySet()) {
-            String hash = entry.getKey();
-            String url = entry.getValue();
-            
-            // Skull registrieren
-            event.register(hash, url);
-            logger().info("Skull registriert: " + hash + " mit URL: " + url);
-        }
-    }
+    public void onPostInitialize(GeyserPostInitializeEvent event) {
+        // Beispiel: Zeigt, dass deine Erweiterung geladen wird.
+        LOGGER.info("Loading example extension...");
 
-    private void connectToDatabase() {
-        try {
-            // SQLite-Datenbankverbindung herstellen
-            String url = "jdbc:sqlite:path/to/your/database.db";
-            connection = DriverManager.getConnection(url);
-        } catch (Exception e) {
-            logger().severe("Datenbankverbindung fehlgeschlagen: " + e.getMessage());
-        }
-    }
+        // Beispiel: Zugriff auf das Datenverzeichnis der Erweiterung
+        Path exampleDataFolder = this.dataFolder();
+        LOGGER.info("Data folder: " + exampleDataFolder.toString());
 
-    private Map<String, String> fetchSkullsFromDatabase() {
-        Map<String, String> skulls = new HashMap<>();
-        try {
-            String query = "SELECT url FROM skulls_table";
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
-            
-            while (resultSet.next()) {
-                String url = resultSet.getString("url");
-                String hash = extractHashFromUrl(url);
-                skulls.put(hash, url);
-            }
-        } catch (Exception e) {
-            logger().severe("Fehler beim Abrufen von Skulls: " + e.getMessage());
-        }
-        return skulls;
-    }
-
-    private String extractHashFromUrl(String url) {
-        // Extrahiere den Hash-Wert aus der URL, der nach dem letzten '/' kommt
-        String[] parts = url.split("/");
-        return parts[parts.length - 1];
+        // Registriere die benutzerdefinierten Skulls
+        // Hier stellen wir sicher, dass die Methode aufgerufen wird, um die Skulls zu registrieren
+        skullHandler.onDefineCustomSkulls(new GeyserDefineCustomSkullsEvent() {
+            // Implementiere die Methode, um die Event-Daten zu simulieren
+        });
     }
 }
