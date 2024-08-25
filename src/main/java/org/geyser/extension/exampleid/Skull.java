@@ -1,8 +1,8 @@
 package org.geyser.extension.exampleid;
 
 import org.geysermc.geyser.api.event.Subscribe;
-import org.geysermc.geyser.api.event.GeyserDefineCustomSkullsEvent;
-import org.geysermc.geyser.api.event.block.SkullTextureType;
+import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent;
+import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent.SkullTextureType;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class RegisterCustomSkull {
+public class Skull {
 
-    private static final Logger LOGGER = Logger.getLogger(RegisterCustomSkull.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Skull.class.getName());
 
     @Subscribe
     public void onDefineCustomSkulls(GeyserDefineCustomSkullsEvent event) {
