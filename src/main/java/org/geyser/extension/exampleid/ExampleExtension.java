@@ -1,4 +1,4 @@
-package org.geyser.extension.exampleid;
+package org.geyser.extension.main;
 
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
 import org.geysermc.geyser.api.extension.Extension;
@@ -39,7 +39,7 @@ public class ExampleExtension implements Extension {
     }
 
     private void createExtensionDirectory() {
-        File extensionDir = new File("extensions/Skull-Expand");
+        File extensionDir = new File("extensions/Skull Expand");
         if (!extensionDir.exists()) {
             if (extensionDir.mkdirs()) {
                 LOGGER.info("Created extension directory: " + extensionDir.getAbsolutePath());

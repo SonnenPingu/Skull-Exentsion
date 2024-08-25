@@ -1,10 +1,12 @@
 plugins {
-    id 'java-library'
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.0'
 }
-
-group 'org.geyser.extension.exampleid'
-version '1.0.0'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     maven {
@@ -25,7 +27,20 @@ repositories {
 
 dependencies {
     // Geyser API - needed for all extensions
-    compileOnly 'org.geysermc.geyser:api:2.3.2-SNAPSHOT'
-
+    compileOnly 'org.geysermc.geyser:api:2.4.2-SNAPSHOT'
+    implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     // Include other dependencies here - e.g. for configuration.
+}
+shadowJar {
+    archiveBaseName.set('Skull-extension')
+    archiveClassifier.set('')
+    archiveVersion.set('1.0.0')
+}
+
+jar {
+    manifest {
+        attributes(
+            'Main-Class': 'src.main.java.org.geyser.extension.exampleid.ExampleExtension' // Deine Hauptklasse
+        )
+    }
 }

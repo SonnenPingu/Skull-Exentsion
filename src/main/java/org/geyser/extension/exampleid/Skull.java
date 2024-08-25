@@ -45,7 +45,7 @@ public class Skull {
 
     private List<String> fetchSkullSkinHashesFromDatabase() throws SQLException {
         List<String> skinHashes = new ArrayList<>();
-        String query = "SELECT texture_url FROM custom_skulls";
+        String query = "SELECT texture_url FROM skulls_skull";
 
         try (Connection conn = DriverManager.getConnection(DATABASE_URL);
              PreparedStatement stmt = conn.prepareStatement(query);
