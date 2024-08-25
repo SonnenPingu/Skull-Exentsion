@@ -3,7 +3,7 @@ package org.geyser.extension.exampleid;
 import org.geysermc.geyser.api.event.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
 import org.geysermc.geyser.api.extension.Extension;
-import org.geysermc.geyser.api.event.manager.EventManager;
+import org.geysermc.geyser.api.event.EventBus;
 import java.util.logging.Logger;
 
 public class Main extends Extension {
@@ -13,14 +13,14 @@ public class Main extends Extension {
     @Override
     public void onInitialize() {
         // Ereignis-Manager erhalten
-        EventManager eventManager = this.getEventManager();
-        
+        EventBus eventBus = this.getEventBus();
+
         // Ereignis registrieren
-        if (eventManager != null) {
-            eventManager.register(this, new Skull());
+        if (eventBus != null) {
+            eventBus.register(this, new Skull());
             LOGGER.info("Skull wurde erfolgreich registriert.");
         } else {
-            LOGGER.warning("EventManager konnte nicht initialisiert werden.");
+            LOGGER.warning("EventBus konnte nicht initialisiert werden.");
         }
     }
 
