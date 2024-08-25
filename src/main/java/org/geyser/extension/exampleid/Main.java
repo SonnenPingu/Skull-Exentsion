@@ -11,8 +11,8 @@ public class ExampleExtension implements Extension {
 
     private static final Logger LOGGER = Logger.getLogger(ExampleExtension.class.getName());
     private Skull skullHandler;
-
-    @Override
+    
+    @Subscribe
     public void onInitialize() {
         // Initialisiere den Skull-Handler
         skullHandler = new Skull();
