@@ -22,28 +22,31 @@ public class RegisterCustomSkull {
     public void onDefineCustomSkulls(GeyserDefineCustomSkullsEvent event) {
         try {
             // Verbindung zur Datenbank herstellen und Texturen abrufen
-            List<String> textureUrls = fetchSkullTextureUrlsFromDatabase();
+            List<String> skinHashes = fetchSkullSkinHashesFromDatabase();
 
-            // Jede Textur URL registrieren
-            for (String textureUrl : textureUrls) {
-                event.register(textureUrl, SkullTextureType.PROFILE);
-                LOGGER.info("Registered custom skull texture: " + textureUrl);
+            // Jeden Skin-Hash registrieren
+            for (String skinHash : skinHashes) {
+                event.register(skinHash, SkullTextureType.SKIN_HASH);
+                LOGGER.info("Registered custom skull skin hash: " + skinHash);
             }
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error registering custom skulls:", e);
         }
     }
 
-    private List<String> fetchSkullTextureUrlsFromDatabase() throws SQLException {
-        List<String> textureUrls = new ArrayList<>();
+    private List<String> fetchSkullSkinHashesFromDatabase() throws SQLException {
+        List<String> skinHashes = new ArrayList<>();
         String query = "SELECT texture_url FROM custom_skulls";
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:extensions/skulldb/skulls.db");
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                textureUrls.add(rs.getString("texture_url"));
+                String textureUrl = rs.getString("texture_url");
+                // Extrahiere den Teil hinter dem letzten '/'
+                String skinHash = textureUrl.substring(textureUrl.lastIndexOf('/') + 1);
+                skinHashes.add(skinHash);
             }
         }
-        return textureUrls;
+        return skinHashes;
     }
 }
