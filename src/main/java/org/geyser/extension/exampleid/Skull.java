@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class Skull {
 
     private static final Logger LOGGER = Logger.getLogger(Skull.class.getName());
-    private static final String DATABASE_URL = "jdbc:sqlite:/home/container/extensions/skulldb/skulls.db"; // Datenbankpfad als Konstante
+    private static final String DATABASE_URL = "jdbc:sqlite:/home/container/extensions/Skull-Expand/skulls.db"; // Datenbankpfad als Konstante
 
 
     // Statische Initialisierung, um den SQLite-Treiber zu laden
