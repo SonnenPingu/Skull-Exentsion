@@ -1,6 +1,6 @@
-id: 102
-name: Skull-Extension
-main: src/main/java/org/geyser/extension/exampleid/Main.java
-api: 2.4.1
+id: skullex
+name: skull-Ex
+main: org.geyser.extension.exampleid.ExampleExtension
+api: 2.4.2
 version: 1.0.0
 authors: [SonnenPingu]
