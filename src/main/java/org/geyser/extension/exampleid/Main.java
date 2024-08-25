@@ -1,6 +1,6 @@
 package org.geyser.extension.exampleid;
 
-import org.geysermc.event.subscribe.Subscribe;
+import org.geysermc.geyser.api.event.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
 import org.geysermc.geyser.api.extension.Extension;
 
