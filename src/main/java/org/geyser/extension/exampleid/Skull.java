@@ -1,4 +1,4 @@
-package org.geyser.extension.main;
+package org.geyser.extension.exampleid;
 
 import org.geysermc.event.subscribe.Subscribe;
 import org.geysermc.geyser.api.event.lifecycle.GeyserDefineCustomSkullsEvent;
