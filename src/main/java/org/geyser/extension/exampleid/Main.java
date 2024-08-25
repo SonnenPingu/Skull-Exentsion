@@ -3,6 +3,7 @@ package org.geyser.extension.exampleid;
 import org.geysermc.geyser.api.event.lifecycle.GeyserPostInitializeEvent;
 import org.geysermc.geyser.api.extension.Extension;
 import org.geysermc.event.subscribe.Subscribe;
+import org.geysemc.geyser.api.event.GeyserDefineCustomeSkullEvent
 
 import java.util.logging.Logger;
 
